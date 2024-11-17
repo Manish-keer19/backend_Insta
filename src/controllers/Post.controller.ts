@@ -26,6 +26,21 @@ export const createPost = async (req: any, res: any) => {
         message: "All fields are required",
       });
     }
+
+    console.log("image is ", image);
+
+    let mediaType;
+
+    image.mimetype.startsWith("image/")
+      ? (mediaType = "image")
+      : (mediaType = "video");
+
+    //   console.log("media type is ", mediaType);
+    // return res.status(200).json({
+    //   success: true,
+    //   message: "just for testing this create post has been stoped",
+    // });
+
     // put the image in cloudinary
     const imgres = await uploadInCloudinary({
       data: image.tempFilePath,
@@ -33,7 +48,7 @@ export const createPost = async (req: any, res: any) => {
     });
     console.log("image res is ", imgres);
     //  creaete post entry in db
-    if(!imgres){
+    if (!imgres) {
       return res.status(400).json({
         success: false,
         message: "Image could not be uploaded",
@@ -45,6 +60,7 @@ export const createPost = async (req: any, res: any) => {
       location: location,
       user: req.user.id,
       imagePublicId: imgres?.public_id,
+      mediaType: mediaType,
     });
 
     // add post id to user
@@ -103,6 +119,32 @@ export const deletePost = async (req: any, res: any) => {
         message: "Post not found",
       });
     }
+
+    // delete the image from cloudinary
+    const deletedImg = await uploadInCloudinary({
+      data: "",
+      folder: "",
+      isUpload: false,
+      publicId: post?.imagePublicId,
+      resourceType: post.mediaType,
+    });
+
+    console.log("deleted img is ", deletedImg);
+
+    if (!deletedImg) {
+      return res.status(400).json({
+        success: false,
+        message: "could not delete the post from cloudinary",
+      });
+    }
+
+    if (deletedImg?.result !== "ok") {
+      return res.status(400).json({
+        success: false,
+        message: "could not delete the Post from cloudinary",
+      });
+    }
+
     // delete the post
     const deletedPost = await Post.findByIdAndDelete(postId, { new: true });
     if (!deletedPost) {
@@ -117,16 +159,6 @@ export const deletePost = async (req: any, res: any) => {
     console.log("all the comments of this post are deleting");
     const deletedComment = await Comment.deleteMany({ post: postId });
     console.log("deletedComment is ", deletedComment);
-
-    // delete the image from cloudinary
-    const deletedImg = await uploadInCloudinary({
-      data: "",
-      folder: "",
-      isUpload: false,
-      publicId: deletedPost?.imagePublicId,
-    });
-
-    console.log("deleted img is ", deletedImg);
 
     // remove that postid from user
     const user = await User.findByIdAndUpdate(req.user.id, {
@@ -159,3 +191,37 @@ export const deletePost = async (req: any, res: any) => {
     });
   }
 };
+
+
+// const updatePostsWithTimestamps = async () => {
+// //   try {
+// //     // Update all posts without createdAt or updatedAt
+// //     await Post.updateMany(
+// //       { createdAt: { $exists: false } }, // Posts without createdAt field
+// //       { $set: { createdAt: new Date(), updatedAt: new Date() } } // Set both createdAt and updatedAt
+// //     );
+// //     console.log("Timestamps added successfully!");
+// //   } catch (error) {
+// //     console.error("Error adding timestamps:", error);
+// //   }
+// // };
+
+// // // Call the function to update posts
+// // updatePostsWithTimestamps();
+
+// const updatePosts = async () => {
+//   try {
+//     // Update all posts that don't have a mediaType field
+//     await Post.updateMany(
+//       { mediaType: { $exists: false } }, // Only update posts without a mediaType field
+//       { $set: { mediaType: 'image' } }   // Set the mediaType to 'image'
+//     );
+//     console.log("Posts updated successfully!");
+//   } catch (error) {
+//     console.error("Error updating posts:", error);
+//   }
+// };
+
+// // Call the function to update posts
+// updatePosts();
+
