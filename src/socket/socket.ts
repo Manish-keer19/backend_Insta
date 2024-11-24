@@ -43,6 +43,10 @@ export const initializeSocket = (io: Server) => {
           `currentUser: ${currentUser}, anotherUser: ${anotherUser}, message: ${msgText}`
         );
 
+        // Emit the "receiveMessage" event to the client
+        io.emit("receiveMessage", msgText);
+
+        // Check if the message already exists
         const isMessageExist = await Message.findOne({
           $or: [
             { currentUser: currentUser, anotherUser: anotherUser },
@@ -77,9 +81,6 @@ export const initializeSocket = (io: Server) => {
               path: "messages.sender", // specify the path to populate within the messages array
               model: "User", // ensure it references the correct model
             });
-
-          // Emit the "receiveMessage" event to the client
-          io.emit("receiveMessage", messageData);
         } else {
           console.log("bhai message create karna he ");
           // create entry in the database
