@@ -81,6 +81,9 @@ export const initializeSocket = (io: Server) => {
               path: "messages.sender", // specify the path to populate within the messages array
               model: "User", // ensure it references the correct model
             });
+
+          // Emit the "receiveMessage" event to the client
+          io.emit("receiveAllMessage", messageData);
         } else {
           console.log("bhai message create karna he ");
           // create entry in the database
@@ -107,9 +110,9 @@ export const initializeSocket = (io: Server) => {
               model: "User", // ensure it references the correct model
             })
             .exec();
-
+          console.log("messageData is ", messageData);
           // Emit the "receiveMessage" event to the client
-          io.emit("receiveMessage", messageData);
+          io.emit("receiveAllMessage", messageData);
         }
       } else {
         console.log("Received data is not an object or is undefined");
