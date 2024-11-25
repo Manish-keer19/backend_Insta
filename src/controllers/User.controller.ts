@@ -25,8 +25,8 @@ export const FollowUser = async (req: Request, res: Response): Promise<any> => {
     const authenticatedReq = req as AuthenticatedRequest;
     const { userId, token } = req.body;
 
-    console.log("userid is ", userId);
-    console.log("token is ", token);
+    // console.log("userid is ", userId);
+    // console.log("token is ", token);
     // validate
     if (!userId) {
       return res.status(400).json({
@@ -35,9 +35,9 @@ export const FollowUser = async (req: Request, res: Response): Promise<any> => {
       });
     }
 
-    console.log("authuser is ", authenticatedReq.user);
+    // console.log("authuser is ", authenticatedReq.user);
     const currentUserId = authenticatedReq.user.id;
-    console.log("currentuserId", currentUserId);
+    // console.log("currentuserId", currentUserId);
 
     if (!currentUserId) {
       return res.status(400).json({
@@ -85,7 +85,7 @@ export const FollowUser = async (req: Request, res: Response): Promise<any> => {
       { new: true }
     );
 
-    console.log("current user is ", currentUser);
+    // console.log("current user is ", currentUser);
 
     if (!currentUser) {
       return res.json({
@@ -105,7 +105,7 @@ export const FollowUser = async (req: Request, res: Response): Promise<any> => {
       },
       { new: true }
     );
-    console.log("another user is ", anotherUser);
+    // console.log("another user is ", anotherUser);
 
     if (!anotherUser) {
       return res.json({
@@ -124,7 +124,7 @@ export const FollowUser = async (req: Request, res: Response): Promise<any> => {
       userdata,
     });
   } catch (error) {
-    console.log("could not follow the user", error);
+    // console.log("could not follow the user", error);
     return res.status(500).json({
       success: false,
       message: "Could not follow the user",
@@ -147,8 +147,8 @@ export const UnFollowUser = async (
     const authenticatedReq = req as AuthenticatedRequest;
 
     const { userId, token } = req.body;
-    console.log("userId", userId);
-    console.log("token is ", token);
+    // console.log("userId", userId);
+    // console.log("token is ", token);
 
     if (!userId || !token) {
       return res.json({
@@ -158,7 +158,7 @@ export const UnFollowUser = async (
     }
 
     const currentUserId = authenticatedReq.user.id;
-    console.log("currntUserId is ", currentUserId);
+    // console.log("currntUserId is ", currentUserId);
 
     if (!currentUserId) {
       return res.json({
@@ -168,7 +168,7 @@ export const UnFollowUser = async (
     }
 
     const isUserExist = await User.findById(userId);
-    console.log("isuserExist is ", isUserExist);
+    // console.log("isuserExist is ", isUserExist);
 
     if (!isUserExist) {
       return res.json({
@@ -212,7 +212,7 @@ export const UnFollowUser = async (
 
       .exec();
 
-    console.log("newcurrent user is ", newcurrentUser);
+    // console.log("newcurrent user is ", newcurrentUser);
 
     if (!currentUser) {
       return res.json({
@@ -232,7 +232,7 @@ export const UnFollowUser = async (
       { new: true }
     );
 
-    console.log("targetuser is ", targetUser);
+    // console.log("targetuser is ", targetUser);
 
     if (!targetUser) {
       return res.json({
@@ -248,7 +248,7 @@ export const UnFollowUser = async (
       userdata: newcurrentUser,
     });
   } catch (error) {
-    console.log("could not unfollowe the user");
+    // console.log("could not unfollowe the user");
     return res.status(400).json({
       success: false,
       message: "could not unfollowe the target user",
@@ -260,11 +260,11 @@ export const getuserFulldata = async (
   req: Request,
   res: Response
 ): Promise<any> => {
-  console.log("req.body is ", req.body);
+  // console.log("req.body is ", req.body);
 
   try {
     const { email } = req.body;
-    console.log("email is", email);
+    // console.log("email is", email);
 
     if (!email) {
       return res.json({
@@ -283,7 +283,7 @@ export const getuserFulldata = async (
 
       .exec();
 
-    console.log("data in getuserdata is ", newuserdata);
+    // console.log("data in getuserdata is ", newuserdata);
     if (!newuserdata) {
       return res.status(400).json({
         success: false,
@@ -323,7 +323,7 @@ export const searchUsers = async (
   try {
     const { searchTerm } = req.body;
 
-    console.log("searchTerm is ", req.body);
+    // console.log("searchTerm is ", req.body);
     if (!searchTerm) {
       return res.status(400).json({
         success: false,
@@ -353,14 +353,14 @@ export const searchUsers = async (
       .populate("following")
       .exec();
 
-    console.log("users are ", users);
+    // console.log("users are ", users);
     res.status(200).json({
       success: true,
       message: "Users retrieved successfully",
       users,
     });
   } catch (error) {
-    console.log("could not search the user ", error);
+    // console.log("could not search the user ", error);
     res.status(500).json({
       success: false,
       message: "Error occurred while searching users",
@@ -376,7 +376,7 @@ export const fetchUserFeed = async (
   try {
     const authenticatedReq = req as AuthenticatedRequest;
     const userId = authenticatedReq.user.id;
-    console.log("userId ", userId);
+    // console.log("userId ", userId);
 
     if (!userId) {
       return res.status(400).json({
@@ -414,7 +414,7 @@ export const fetchUserFeed = async (
       })
       .exec();
 
-    console.log("User data is ", user);
+    // console.log("User data is ", user);
 
     if (!user) {
       return res.status(400).json({
@@ -429,7 +429,7 @@ export const fetchUserFeed = async (
       userFeed: user.following, // Send the following users data
     });
   } catch (error) {
-    console.log("Could not fetch the user feed", error);
+    // console.log("Could not fetch the user feed", error);
     return res.status(500).json({
       success: false,
       message: "Could not fetch the user feed",
@@ -462,7 +462,7 @@ export const fetchUserFollowingList = async (
     }
 
     //  fetch all following user
-    console.log("userid is ", userId);
+    // console.log("userid is ", userId);
     const userFollowingList = await User.findById(userId, {}, { new: true })
       .populate("following")
       .exec();
@@ -474,7 +474,7 @@ export const fetchUserFollowingList = async (
       followingList: userFollowingList?.following,
     });
   } catch (error) {
-    console.log("could not fetch the following list", error);
+    // console.log("could not fetch the following list", error);
     return res.status(500).json({
       success: false,
       message: "Could not fetch the following list",
@@ -489,7 +489,7 @@ export const searchUserInMessage = async (
   try {
     const { searchTerm } = req.body;
 
-    console.log("searchTerm is ", req.body);
+    // console.log("searchTerm is ", req.body);
     if (!searchTerm) {
       return res.status(400).json({
         success: false,
@@ -523,7 +523,7 @@ export const searchUserInMessage = async (
       users,
     });
   } catch (error) {
-    console.log("could not featch the user in message", error);
+    // console.log("could not featch the user in message", error);
     return res.status(500).json({
       success: false,
       message: "Could not featch the user in message",
@@ -537,7 +537,7 @@ export const featchUserData = async (
 ): Promise<any> => {
   try {
     const { userId } = req.body;
-    console.log("userId is ", userId);
+    // console.log("userId is ", userId);
 
     if (!userId) {
       return res.status(400).json({
@@ -578,7 +578,7 @@ export const featchUserData = async (
       userdata,
     });
   } catch (error) {
-    console.log("could not fetch the user data", error);
+    // console.log("could not fetch the user data", error);
     return res.status(500).json({
       success: false,
       message: "Could not fetch the user data",
@@ -605,7 +605,7 @@ export const chnageProfilePic = async (
       ? profileImage[0]?.tempFilePath // Take the first file if it's an array
       : profileImage?.tempFilePath; // If it's a single file
 
-    console.log("profile image path is ", profileImagePath);
+    // console.log("profile image path is ", profileImagePath);
     // Find user by email
     const user = await User.findOne({ email: email }).populate("profile");
 
@@ -617,7 +617,7 @@ export const chnageProfilePic = async (
     }
 
     if (profileImage && profileImagePath) {
-      console.log("bhai profile image ko update karna he profile ko");
+      // console.log("bhai profile image ko update karna he profile ko");
       const imgres = await uploadInCloudinary({
         data: profileImagePath,
         folder: "profile",
@@ -638,7 +638,7 @@ export const chnageProfilePic = async (
         },
         { new: true }
       );
-      console.log("newuser is ", newUser);
+      // console.log("newuser is ", newUser);
 
       return res.status(200).json({
         success: true,
@@ -646,7 +646,7 @@ export const chnageProfilePic = async (
       });
     }
   } catch (error) {
-    console.log("could not change the profile picture", error);
+    // console.log("could not change the profile picture", error);
     return res.status(500).json({
       success: false,
       message: "Could not change the profile picture",

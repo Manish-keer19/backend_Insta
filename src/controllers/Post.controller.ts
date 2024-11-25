@@ -14,11 +14,11 @@ export const createPost = async (req: any, res: any) => {
   try {
     // fetch the caption ,image and location
     const { caption, location } = req.body;
-    console.log("caption is ", caption);
-    console.log("location is ", location);
-    console.log("req.files is ", req.files);
+    // console.log("caption is ", caption);
+    // console.log("location is ", location);
+    // console.log("req.files is ", req.files);
     const image = req.files.image ? req.files.image : null;
-    console.log("image is ", image);
+    // console.log("image is ", image);
     // validate it
     if (!caption || !location || !image) {
       return res.status(400).json({
@@ -27,7 +27,7 @@ export const createPost = async (req: any, res: any) => {
       });
     }
 
-    console.log("image is ", image);
+    // console.log("image is ", image);
 
     let mediaType;
 
@@ -35,7 +35,7 @@ export const createPost = async (req: any, res: any) => {
       ? (mediaType = "image")
       : (mediaType = "video");
 
-    //   console.log("media type is ", mediaType);
+      console.log("media type is ", mediaType);
     // return res.status(200).json({
     //   success: true,
     //   message: "just for testing this create post has been stoped",
@@ -46,7 +46,7 @@ export const createPost = async (req: any, res: any) => {
       data: image.tempFilePath,
       folder: "posts",
     });
-    console.log("image res is ", imgres);
+    // console.log("image res is ", imgres);
     //  creaete post entry in db
     if (!imgres) {
       return res.status(400).json({
@@ -71,10 +71,10 @@ export const createPost = async (req: any, res: any) => {
       },
       { new: true }
     );
-    console.log("new user is ", newUser);
+    // console.log("new user is ", newUser);
 
     const userdata = await fetchAllDetailsUser(req?.user?.email);
-    console.log("userdata is ", userdata);
+    // console.log("userdata is ", userdata);
 
     // return res
     return res.status(200).json({
@@ -83,7 +83,7 @@ export const createPost = async (req: any, res: any) => {
       userdata,
     });
   } catch (error) {
-    console.log("could not create post", error);
+    // console.log("could not create post", error);
     return res.status(500).json({
       success: false,
       message: "could not create post",
@@ -101,7 +101,7 @@ export const deletePost = async (req: any, res: any) => {
   try {
     // fetch the post id from req.body
     const { postId } = req.body;
-    console.log("PostId is ", postId);
+    // console.log("PostId is ", postId);
     // validate it
     if (!postId) {
       return res.status(400).json({
@@ -129,7 +129,7 @@ export const deletePost = async (req: any, res: any) => {
       resourceType: post.mediaType,
     });
 
-    console.log("deleted img is ", deletedImg);
+    // console.log("deleted img is ", deletedImg);
 
     if (!deletedImg) {
       return res.status(400).json({
@@ -154,11 +154,11 @@ export const deletePost = async (req: any, res: any) => {
       });
     }
 
-    console.log("deletedPost is ", deletedPost);
+    // console.log("deletedPost is ", deletedPost);
     // delete all comment of that post
-    console.log("all the comments of this post are deleting");
+    // console.log("all the comments of this post are deleting");
     const deletedComment = await Comment.deleteMany({ post: postId });
-    console.log("deletedComment is ", deletedComment);
+    // console.log("deletedComment is ", deletedComment);
 
     // remove that postid from user
     const user = await User.findByIdAndUpdate(req.user.id, {
@@ -200,7 +200,7 @@ export const deletePost = async (req: any, res: any) => {
 // //       { createdAt: { $exists: false } }, // Posts without createdAt field
 // //       { $set: { createdAt: new Date(), updatedAt: new Date() } } // Set both createdAt and updatedAt
 // //     );
-// //     console.log("Timestamps added successfully!");
+//     console.log("Timestamps added successfully!");
 // //   } catch (error) {
 // //     console.error("Error adding timestamps:", error);
 // //   }
@@ -216,7 +216,7 @@ export const deletePost = async (req: any, res: any) => {
 //       { mediaType: { $exists: false } }, // Only update posts without a mediaType field
 //       { $set: { mediaType: 'image' } }   // Set the mediaType to 'image'
 //     );
-//     console.log("Posts updated successfully!");
+    console.log("Posts updated successfully!");
 //   } catch (error) {
 //     console.error("Error updating posts:", error);
 //   }

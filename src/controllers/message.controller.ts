@@ -40,7 +40,7 @@ export const getAllMessages = async (
       messages,
     });
   } catch (error) {
-    console.log("Could not get the messages", error);
+    // console.log("Could not get the messages", error);
     return res.status(500).json({
       success: false,
       message: "Could not get the messages",
@@ -54,10 +54,10 @@ export const editMessage = async (
 ): Promise<any> => {
   try {
     const { currentUserId, anotherUserId, message, messageId } = req.body;
-    console.log("curentUserId is ", currentUserId);
-    console.log("anotherUserId is ", anotherUserId);
-    console.log("message is ", message);
-    console.log("messageId is ", messageId);
+    // console.log("curentUserId is ", currentUserId);
+    // console.log("anotherUserId is ", anotherUserId);
+    // console.log("message is ", message);
+    // console.log("messageId is ", messageId);
 
     if (!currentUserId || !anotherUserId || !message || !messageId) {
       return res.status(400).json({
@@ -69,7 +69,7 @@ export const editMessage = async (
     let updatedMessageDoc;
 
     if (currentUserId !== anotherUserId) {
-      console.log("bhai current user id or another user id is not equal");
+      // console.log("bhai current user id or another user id is not equal");
 
       // Find the document and update the specific message in the messages array
       updatedMessageDoc = await Message.findOneAndUpdate(
@@ -90,7 +90,7 @@ export const editMessage = async (
         model: "User",
       });
     } else {
-      console.log("bhai current user id or another user id is  equal");
+      // console.log("bhai current user id or another user id is  equal");
       updatedMessageDoc = await Message.findOneAndUpdate(
         {
           $and: [
@@ -110,7 +110,7 @@ export const editMessage = async (
       });
     }
 
-    console.log(updatedMessageDoc);
+    // console.log(updatedMessageDoc);
     if (!updatedMessageDoc) {
       return res.status(400).json({
         success: false,
@@ -124,7 +124,7 @@ export const editMessage = async (
       messages: updatedMessageDoc,
     });
   } catch (error) {
-    console.log("Could not update the message", error);
+    // console.log("Could not update the message", error);
     return res.status(500).json({
       success: false,
       message: "Could not update the message",
@@ -138,9 +138,9 @@ export const deleteMessage = async (
 ): Promise<any> => {
   try {
     const { currentUserId, anotherUserId, messageId } = req.body;
-    console.log("curentUserId is ", currentUserId);
-    console.log("anotherUserId is ", anotherUserId);
-    console.log("messageId is ", messageId);
+    // console.log("curentUserId is ", currentUserId);
+    // console.log("anotherUserId is ", anotherUserId);
+    // console.log("messageId is ", messageId);
 
     if (!currentUserId || !anotherUserId || !messageId) {
       return res.status(400).json({
@@ -201,7 +201,7 @@ export const deleteMessage = async (
       messages: updatedMessageDoc,
     });
   } catch (error) {
-    console.log("Could not delete the message", error);
+    // console.log("Could not delete the message", error);
     return res.status(500).json({
       success: false,
       message: "Could not delete the message",

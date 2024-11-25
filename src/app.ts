@@ -6,13 +6,15 @@ import cors from "cors"; // Import CORS package
 import dotenv from "dotenv";
 import authRoute from "./router/auth.route";
 import fileUpload from "express-fileupload";
-import Postroute from "./router/post.route"; 
+import Postroute from "./router/post.route";
 import likeRoute from "./router/Like.route";
 import commentRoute from "./router/comment.route";
 import storyRoute from "./router/story.route";
 import messageRoute from "./router/message.route";
 
 dotenv.config(); // Load environment variables from .env file
+
+import "./cronJobs/storyCleanup";
 
 // Create an instance of the Express application
 const app = express();

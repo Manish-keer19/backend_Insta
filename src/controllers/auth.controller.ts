@@ -16,7 +16,7 @@ export const generateOtp = async (
 ): Promise<any> => {
   try {
     const { email } = req.body;
-    console.log("email is ", email);
+    // console.log("email is ", email);
 
     if (!email) {
       return res.status(400).json({
@@ -33,7 +33,7 @@ export const generateOtp = async (
       specialChars: false,
     });
 
-    console.log("otp is ", otp);
+    // console.log("otp is ", otp);
 
     // Check if an OTP exists for the email
     const existingOtp = await Otp.findOne({ email: email });
@@ -42,11 +42,11 @@ export const generateOtp = async (
       // Update existing OTP
       existingOtp.otp = otp;
       await existingOtp.save(); // Save the updated OTP
-      console.log("Updated OTP for existing user");
+      // console.log("Updated OTP for existing user");
     } else {
       // Save new OTP to database
       await Otp.create({ email: email, otp: otp });
-      console.log("Created new OTP for user");
+      // console.log("Created new OTP for user");
     }
 
     return res.status(200).json({
@@ -55,7 +55,7 @@ export const generateOtp = async (
       otp, // Optionally return the generated OTP
     });
   } catch (error) {
-    console.log("error while generating OTP", error); // Added error logging
+    // console.log("error while generating OTP", error); // Added error logging
     return res.status(500).json({
       success: false,
       message: "Something went wrong while generating OTP",
@@ -69,7 +69,7 @@ export const IsUsernameAlreadyTaken = async (
 ): Promise<any> => {
   try {
     const { username } = req.body;
-    console.log("username is ", username);
+    // console.log("username is ", username);
 
     // Check if username is provided
     if (!username) {
@@ -81,7 +81,7 @@ export const IsUsernameAlreadyTaken = async (
 
     // Trim whitespace from username
     const trimmedUsername = username.trim();
-    console.log("trimmed username is ", trimmedUsername);
+    // console.log("trimmed username is ", trimmedUsername);
 
     // Check if trimmed username contains spaces
     if (trimmedUsername !== username) {
@@ -106,7 +106,7 @@ export const IsUsernameAlreadyTaken = async (
       message: "Username is available",
     });
   } catch (error) {
-    console.log("Some error occurred during checking username:", error);
+    // console.log("Some error occurred during checking username:", error);
     return res.status(500).json({
       success: false,
       message: "Something went wrong while checking username",
@@ -117,12 +117,12 @@ export const IsUsernameAlreadyTaken = async (
 
 export const Signup = async (req: Request, res: Response): Promise<any> => {
   try {
-    console.log("req.body is ", req.body);
+    // console.log("req.body is ", req.body);
     const { username, email, password, otp } = req.body;
-    console.log("username is ", username);
-    console.log("email is ", email);
-    console.log("password is ", password);
-    console.log("otp is ", otp);
+    // console.log("username is ", username);
+    // console.log("email is ", email);
+    // console.log("password is ", password);
+    // console.log("otp is ", otp);
 
     if (!username || !email || !password || !otp) {
       return res.status(400).json({
@@ -141,7 +141,7 @@ export const Signup = async (req: Request, res: Response): Promise<any> => {
     }
 
     const dbotp = await Otp.findOne({ email: email });
-    console.log("dbotp is ", dbotp);
+    // console.log("dbotp is ", dbotp);
 
     if (dbotp?.otp !== otp) {
       return res.status(400).json({
@@ -166,7 +166,7 @@ export const Signup = async (req: Request, res: Response): Promise<any> => {
       data: newUser,
     });
   } catch (error) {
-    console.log("error is ", error);
+    // console.log("error is ", error);
     return res.status(500).json({
       success: false,
       message: "could not signup the user",
@@ -175,11 +175,11 @@ export const Signup = async (req: Request, res: Response): Promise<any> => {
 };
 
 export const Login = async (req: Request, res: Response): Promise<any> => {
-  console.log("req.body is ", req.body);
+  // console.log("req.body is ", req.body);
   try {
     const { email, password } = req.body;
-    console.log("email is ", email);
-    console.log("password is ", password);
+    // console.log("email is ", email);
+    // console.log("password is ", password);
 
     if (!email || !password) {
       return res.status(400).json({
@@ -190,7 +190,7 @@ export const Login = async (req: Request, res: Response): Promise<any> => {
 
     const isUserExist = await User.findOne({ email: email }, {}, { new: true });
 
-    console.log("isuserExitst is ", isUserExist);
+    // console.log("isuserExitst is ", isUserExist);
     if (!isUserExist) {
       return res.status(400).json({
         success: false,
@@ -250,7 +250,7 @@ export const Login = async (req: Request, res: Response): Promise<any> => {
     user.token = token;
     user.password = "";
 
-    console.log("user is ", user);
+    // console.log("user is ", user);
 
     const userdata = await fetchAllDetailsUser(email);
     return res.status(200).json({
@@ -260,7 +260,7 @@ export const Login = async (req: Request, res: Response): Promise<any> => {
       token,
     });
   } catch (error) {
-    console.log("could not login the user", error);
+    // console.log("could not login the user", error);
     return res.status(500).json({
       success: false,
       message: "could not login the user",
@@ -271,7 +271,7 @@ export const Login = async (req: Request, res: Response): Promise<any> => {
 export const sendOtp = async (req: Request, res: Response): Promise<any> => {
   try {
     const { email } = req.body;
-    console.log("email is ", email);
+    // console.log("email is ", email);
 
     if (!email) {
       return res.status(400).json({
@@ -296,7 +296,7 @@ export const sendOtp = async (req: Request, res: Response): Promise<any> => {
       specialChars: false,
     });
 
-    console.log("otp is ", otp);
+    // console.log("otp is ", otp);
 
     // Check if an OTP exists for the email
     const existingOtp = await Otp.findOne({ email: email });
@@ -305,11 +305,11 @@ export const sendOtp = async (req: Request, res: Response): Promise<any> => {
       // Update existing OTP
       existingOtp.otp = otp;
       await existingOtp.save(); // Save the updated OTP
-      console.log("Updated OTP for existing user");
+      // console.log("Updated OTP for existing user");
     } else {
       // Save new OTP to database
       await Otp.create({ email: email, otp: otp });
-      console.log("Created new OTP for user");
+      // console.log("Created new OTP for user");
     }
 
     return res.status(200).json({
@@ -318,7 +318,7 @@ export const sendOtp = async (req: Request, res: Response): Promise<any> => {
       otp, // Optionally return the generated OTP
     });
   } catch (error) {
-    console.log("error while generating OTP", error); // Added error logging
+    // console.log("error while generating OTP", error); // Added error logging
     return res.status(500).json({
       success: false,
       message: "Something went wrong while generating OTP",
@@ -340,9 +340,9 @@ export const ResetPassword = async (
   try {
     // fetch the email password otp from req.body
     const { email, password, otp } = req.body;
-    console.log("email is ", email);
-    console.log("password is ", password);
-    console.log("otp is ", otp);
+    // console.log("email is ", email);
+    // console.log("password is ", password);
+    // console.log("otp is ", otp);
     // validate it
     if (!email || !password || !otp) {
       return res.status(400).json({
@@ -361,7 +361,7 @@ export const ResetPassword = async (
     }
     // check if otp is correct or not
     const dbotp = await Otp.findOne({ email: email });
-    console.log("dbotp is ", dbotp);
+    // console.log("dbotp is ", dbotp);
 
     if (!dbotp) {
       return res.status(400).json({
@@ -385,7 +385,7 @@ export const ResetPassword = async (
       message: "Password reset successfully",
     });
   } catch (error) {
-    console.log("could not reset the password", error);
+    // console.log("could not reset the password", error);
     return res.status(500).json({
       success: false,
       message: "could not reset the password",
@@ -399,9 +399,9 @@ export const changePassword = async (
 ): Promise<any> => {
   try {
     const { email, oldPassword, newPassword } = req.body;
-    console.log("email is ", email);
-    console.log("oldPassword is ", oldPassword);
-    console.log("newPassword is ", newPassword);
+    // console.log("email is ", email);
+    // console.log("oldPassword is ", oldPassword);
+    // console.log("newPassword is ", newPassword);
     if (!email || !oldPassword || !newPassword) {
       return res.status(400).json({
         success: false,
@@ -440,7 +440,7 @@ export const changePassword = async (
       });
     }
   } catch (error) {
-    console.log("could not change the password", error);
+    // console.log("could not change the password", error);
     return res.status(500).json({
       success: false,
       message: "could not change the password",

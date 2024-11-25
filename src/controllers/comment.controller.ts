@@ -29,9 +29,9 @@ export const createComment = async (
     }
 
     // Log details to ensure data is being passed correctly
-    console.log("user is ", user);
-    console.log("comment is ", comment);
-    console.log("postId is ", postId);
+    // console.log("user is ", user);
+    // console.log("comment is ", comment);
+    // console.log("postId is ", postId);
 
     // Validate comment and postId
     if (!comment || !postId) {
@@ -103,14 +103,14 @@ export const deleteComment = async (
     // fetch the commnet id from req.body
     const { commentId } = req.body;
     const user = req.user;
-    console.log("user is ", user);
+    // console.log("user is ", user);
     if (!user) {
       return res.status(401).json({
         success: false,
         message: "User not authenticated",
       });
     }
-    console.log("commentId is ", commentId);
+    // console.log("commentId is ", commentId);
 
     // validate it
     if (!commentId) {
@@ -158,7 +158,7 @@ export const deleteComment = async (
       });
     }
 
-    console.log("userdata in delete comment is ", userdata);
+    // console.log("userdata in delete comment is ", userdata);
     // return success response
     return res.status(200).json({
       success: true,
@@ -166,7 +166,7 @@ export const deleteComment = async (
       userdata,
     });
   } catch (error: any) {
-    console.log("could not delete the comment", error);
+    // console.log("could not delete the comment", error);
     return res.status(500).json({
       success: false,
       message: "Could not delete the comment",

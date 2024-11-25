@@ -28,6 +28,8 @@ const io = new Server(server, {
   },
 });
 
+export {io};
+
 initializeSocket(io);
 // initializeCallerSocket(io);
 

@@ -18,7 +18,7 @@ export const createLike = async (
   try {
     // Fetch the data from postId
     const { postId } = req.body;
-    console.log("postId is", postId);
+    // console.log("postId is", postId);
 
     if (!postId) {
       return res.status(400).json({
@@ -43,7 +43,7 @@ export const createLike = async (
         message: "User not authenticated",
       });
     }
-    console.log("user is", user);
+    // console.log("user is", user);
 
     // Check if the user has already liked the post
     const userId = new mongoose.Types.ObjectId(user.id);
@@ -62,7 +62,7 @@ export const createLike = async (
     );
 
     const userdata = await fetchAllDetailsUser(user.email);
-    console.log("userdata is ", userdata);
+    // console.log("userdata is ", userdata);
 
     // Return response
     return res.status(200).json({
@@ -71,7 +71,7 @@ export const createLike = async (
       userdata,
     });
   } catch (error) {
-    console.log("Could not create the like", error);
+    // console.log("Could not create the like", error);
     return res.status(400).json({
       success: false,
       message: "Could not create the like",
@@ -123,7 +123,7 @@ export const deleteLike = async (
       },
       { new: true }
     );
-    console.log("newpost after delete like is ", newPost);
+    // console.log("newpost after delete like is ", newPost);
     if (!newPost) {
       return res.status(400).json({
         success: false,
@@ -132,7 +132,7 @@ export const deleteLike = async (
     }
 
     const userdata = await fetchAllDetailsUser(user.email);
-    console.log("userdata is ", userdata);
+    // console.log("userdata is ", userdata);
 
     return res.status(200).json({
       success: true,
@@ -140,7 +140,7 @@ export const deleteLike = async (
       userdata,
     });
   } catch (error: any) {
-    console.log("could not delete the like ", error);
+    // console.log("could not delete the like ", error);
     return res.status(400).json({
       success: false,
       message: "could not delete the like",
