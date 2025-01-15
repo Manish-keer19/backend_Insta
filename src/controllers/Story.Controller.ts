@@ -49,7 +49,10 @@ export const createStory = async (
     // console.log("is user exist is ", isUserExist);
 
     const mediaFile = Array.isArray(media) ? media[0] : media;
+    console.log("mediaFile is ", mediaFile);
+
     const mediaType = mediaFile.mimetype;
+    console.log("mimetype is ", mediaType);
     let mediaCategory: "image" | "video" | null = null;
 
     if (mediaType.startsWith("image/")) {
@@ -57,6 +60,7 @@ export const createStory = async (
     } else if (mediaType.startsWith("video/")) {
       mediaCategory = "video";
     }
+    console.log("media category is ", mediaCategory);
 
     if (!mediaCategory) {
       return res.status(400).json({

@@ -203,6 +203,7 @@ export const Login = async (req: Request, res: Response): Promise<any> => {
       isUserExist.password
     );
     if (!isPasswordMatch) {
+      // console.log("Password does not match");
       return res.status(400).json({
         success: false,
         message: "Invalid password",
