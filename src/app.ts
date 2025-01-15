@@ -11,6 +11,7 @@ import likeRoute from "./router/Like.route";
 import commentRoute from "./router/comment.route";
 import storyRoute from "./router/story.route";
 import messageRoute from "./router/message.route";
+import path from 'path';
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -49,9 +50,14 @@ app.use("/api/v1/message", messageRoute); // Message routes
 //   res.send("Hello World!");
 // });
 
+// Serve static files from the 'dist' folder
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Serve the Home.html file from the 'dist' folder
 app.get("/", (req: Request, res: Response) => {
-  res.sendFile(__dirname + "/Home.html");
+  res.sendFile(path.join(__dirname, 'dist', 'Home.html'));
 });
+
 // Health check route
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).send("OK");
