@@ -216,7 +216,7 @@ export const deletePost = async (req: any, res: any) => {
 //       { mediaType: { $exists: false } }, // Only update posts without a mediaType field
 //       { $set: { mediaType: 'image' } }   // Set the mediaType to 'image'
 //     );
-    console.log("Posts updated successfully!");
+    // console.log("Posts updated successfully!");
 //   } catch (error) {
 //     console.error("Error updating posts:", error);
 //   }

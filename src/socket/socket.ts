@@ -26,16 +26,15 @@ export const initializeSocket = (io: Server) => {
   io.on("connection", (socket: Socket) => {
     console.log(`User connected: ${socket.id}`);
     // console.log("New user connected:", socket.id);
-
-    socket.on("userOnline", (userId) => {
-      onlineUsers.set(userId, socket.id); // Store user's online status
-      io.emit("userhasOnline", { userId, socketId: socket.id });
-    });
-
+    // socket.on("userOnline", (userId) => {
+    //   onlineUsers.set(userId, socket.id); // Store user's online status
+    //   io.emit("userhasOnline", { userId, socketId: socket.id });
+    // });
     // Listen for "sendMessage" event from the client
+
     socket.on("sendMessage", async (message) => {
       if (message && typeof message === "object") {
-        console.log("Received message object:", message);
+        // console.log("Received message object:", message);
 
         // Access properties of the message
         const { currentUser, anotherUser, message: msgText, sender } = message;

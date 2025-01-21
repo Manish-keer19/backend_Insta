@@ -25,6 +25,16 @@ const MessageShema = new mongoose.Schema(
           type: Date,
           default: Date.now(),
         },
+        media:{
+          type:String,
+
+        },
+        mediaType:{
+          type:String
+        },
+        publicId:{
+          type:String
+        }
       },
     ],
   },
