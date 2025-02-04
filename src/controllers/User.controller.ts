@@ -620,7 +620,7 @@ export const chnageProfilePic = async (
       // console.log("bhai profile image ko update karna he profile ko");
       const imgres = await uploadInCloudinary({
         data: profileImagePath,
-        folder: "profile",
+        folder: "Instagram/profile",
       });
 
       if (!imgres) {

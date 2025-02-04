@@ -71,7 +71,7 @@ export const createStory = async (
 
     const newMedia = await uploadInCloudinary({
       data: mediaFile.tempFilePath,
-      folder: "stories",
+      folder: "Instagram/stories",
     });
 
     if (!newMedia) {

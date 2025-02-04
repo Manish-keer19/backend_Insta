@@ -44,7 +44,7 @@ export const createPost = async (req: any, res: any) => {
     // put the image in cloudinary
     const imgres = await uploadInCloudinary({
       data: image.tempFilePath,
-      folder: "posts",
+      folder: "Instagram/posts",
     });
     // console.log("image res is ", imgres);
     //  creaete post entry in db
